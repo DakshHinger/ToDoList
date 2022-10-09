@@ -6,7 +6,8 @@ const port = 3000;
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
-    res.render('index');
+    let day = "thorday"; 
+    res.render('index', {day: day});
 });
 
 app.listen(port, () => {
