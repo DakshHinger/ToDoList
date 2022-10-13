@@ -13,11 +13,9 @@
         <%= day %>
     </h1>
     <ul>
-        <li>Hello</li>
-        <li>Add Work</li>
         <!-- <li> <%= newItem %> </li> -->
         <%  for(var i=0; i < newItem.length ;i++){ %>
-            <li> <%= newItem[i] %></li> 
+            <li> <%= newItem[i].name %></li> 
         <%  } %>
     </ul>
     <form action="/" method="post">

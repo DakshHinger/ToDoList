@@ -24,11 +24,11 @@ const item3 = new Item({
 });
 const defaultItems = [item1, item2, item3];
 
-Item.insertMany(defaultItems, (err) => {
-    if (err) {
-        console.log(err);
-    }
-})
+// Item.insertMany(defaultItems, (err) => {
+//     if (err) {
+//         console.log(err);
+//     }
+// });
 
 var items = [];
 app.set('view engine', 'ejs');
@@ -36,12 +36,32 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     let day = new Date().getDay();
-    res.render('index', { day: day, newItem: items });
+
+    Item.find({}, function (err, foundItems) {
+        if (foundItems.length === 0) {
+            Item.insertMany(defaultItems, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            res.redirect("/");
+        } else {
+            res.render("index", { day: day, newItem: foundItems })
+        }
+
+    })
+    // let day = new Date().getDay();
+    // res.render('index', { day: day, newItem: items });
 });
 
 app.post('/', (req, res) => {
-    item = req.body.newItem;
-    items.push(item);
+    // item = req.body.newItem;
+    const itemName = req.body.newItem;
+    const item = new Item({
+        name: itemName
+    });
+    item.save();
+    // items.push(item);
     res.redirect("/");
 })
 
