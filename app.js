@@ -36,7 +36,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     let day = new Date().getDay();
-
+    const DayArray=["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
     Item.find({}, function (err, foundItems) {
         if (foundItems.length === 0) {
             Item.insertMany(defaultItems, (err) => {
@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
             });
             res.redirect("/");
         } else {
-            res.render("index", { day: day, newItem: foundItems })
+            res.render("index", { day: DayArray[day], newItem: foundItems })
         }
 
     })
